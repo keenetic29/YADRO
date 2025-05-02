@@ -9,9 +9,13 @@ import (
 	"strings"
 )
 
+type InputReader interface {
+	ReadInput() (*domain.Input, error)
+}
+
 type StdinInput struct{}
 
-func NewStdinInput() domain.InputReader {
+func NewStdinInput() InputReader {
 	return &StdinInput{}
 }
 

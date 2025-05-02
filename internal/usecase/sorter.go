@@ -1,16 +1,18 @@
 package usecase
 
 import (
+	"ball-sorting/internal/delivery"
 	"ball-sorting/internal/domain"
+	"ball-sorting/internal/repository"
 	"sort"
 )
 
 type Sorter struct {
-	inputReader  domain.InputReader
-	outputWriter domain.OutputWriter
+	inputReader  repository.InputReader
+	outputWriter delivery.OutputWriter
 }
 
-func NewSorter(inputReader domain.InputReader, outputWriter domain.OutputWriter) *Sorter {
+func NewSorter(inputReader repository.InputReader, outputWriter delivery.OutputWriter) *Sorter {
 	return &Sorter{
 		inputReader:  inputReader,
 		outputWriter: outputWriter,

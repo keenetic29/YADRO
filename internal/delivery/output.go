@@ -5,9 +5,14 @@ import (
 	"os"
 )
 
+type OutputWriter interface {
+	WriteResult(result *domain.Output)
+	WriteError(err error)
+}
+
 type StdoutOutput struct{}
 
-func NewStdoutOutput() domain.OutputWriter {
+func NewStdoutOutput() OutputWriter {
 	return &StdoutOutput{}
 }
 
