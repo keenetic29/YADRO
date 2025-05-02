@@ -1,12 +1,10 @@
 package domain
 
-// Input - входные данные задачи
 type Input struct {
-	N          int       // Количество контейнеров/цветов
-	Containers [][]int   // Матрица: Containers[контейнер][цвет] = количество
+	N          int       
+	Containers [][]int   
 }
 
-// Output - результат проверки
 type Output struct {
 	CanSort bool
 }
