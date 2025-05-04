@@ -8,13 +8,12 @@ import (
 )
 
 func main() {
-	// Инициализация зависимостей
-	inputReader := repository.NewStdinInput()
-	outputWriter := delivery.NewStdoutOutput()
-	sorter := usecase.NewSorter(inputReader, outputWriter)
+	inputReader := repository.NewStdinInput(os.Stdin)
+	outputWriter := delivery.NewStdoutOutput(os.Stdout, os.Stderr)
 
-	// Запуск
+	sorter := usecase.NewSorter(inputReader, outputWriter)
 	if err := sorter.Run(); err != nil {
 		os.Exit(1)
 	}
 }
+

@@ -2,7 +2,7 @@ package delivery
 
 import (
 	"ball-sorting/internal/domain"
-	"os"
+	"io"
 )
 
 type OutputWriter interface {
@@ -10,20 +10,28 @@ type OutputWriter interface {
 	WriteError(err error)
 }
 
-type StdoutOutput struct{}
-
-func NewStdoutOutput() OutputWriter {
-	return &StdoutOutput{}
+type StdoutOutput struct {
+	outWriter io.Writer
+	errWriter io.Writer
 }
 
-func (o *StdoutOutput) WriteResult(result *domain.Output) {
-	if result.CanSort {
-		os.Stdout.WriteString("yes\n")
-	} else {
-		os.Stdout.WriteString("no\n")
+func NewStdoutOutput(outWriter, errWriter io.Writer) *StdoutOutput {
+	return &StdoutOutput{
+		outWriter: outWriter,
+		errWriter: errWriter,
 	}
 }
 
+func (o *StdoutOutput) WriteResult(result *domain.Output) {
+	var output string
+	if result.CanSort {
+		output = "yes\n"
+	} else {
+		output = "no\n"
+	}
+	o.outWriter.Write([]byte(output))
+}
+
 func (o *StdoutOutput) WriteError(err error) {
-	os.Stderr.WriteString("Ошибка: " + err.Error() + "\n")
+	o.errWriter.Write([]byte("Ошибка: " + err.Error() + "\n"))
 }
